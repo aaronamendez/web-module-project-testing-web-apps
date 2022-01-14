@@ -22,9 +22,17 @@ test('renders the contact form header', () => {
 });
 
 // the component renders ONE error message if the user enters less than 4 characters into the firstname field. Make sure to use async / await and the correct screen method to account for state change.
-test('renders ONE error message if user enters less then 5 characters into firstname.', async () => {});
+test('renders ONE error message if user enters less then 5 characters into firstname.', async () => {
+	render(<ContactForm />);
 
-// test('renders THREE error messages if user enters no values into any fields.', async () => {});
+	const firstNameField = screen.getByLabelText(/First Name*/i);
+	userEvent.type(firstNameField, '123');
+
+	const errorMessages = await screen.findAllByTestId('error');
+	expect(errorMessages).toHaveLength(1);
+});
+
+test('renders THREE error messages if user enters no values into any fields.', async () => {});
 
 // test('renders ONE error message if user enters a valid first name and last name but no email.', async () => {});
 
